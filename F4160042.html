@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Household Cybersecurity Checklist</title>
+<style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #f0f8ff 0%, #6b9ddf 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .progress-indicator {
+            background: #f8f9fa;
+            padding: 20px;
+            text-align: center;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .progress-text {
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+
+        .progress-bar {
+            background: #e9ecef;
+            height: 8px;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+
+        .progress-fill {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            height: 100%;
+            transition: width 0.3s ease;
+        }
+
+        .page {
+            padding: 30px;
+            display: none;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        .page-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 3px solid #f0f0f0;
+        }
+
+        .page-header h2 {
+            font-size: 2em;
+            font-weight: 700;
+            color: #2c3e50;
+            margin: 0;
+        }
+
+        .accordion-item {
+            margin-bottom: 15px;
+            border: 2px solid #f0f0f0;
+            border-radius: 15px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .accordion-item:hover {
+            border-color: #3498db;
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.1);
+        }
+
+        .accordion-item.error {
+            border-color: #dc3545 !important;
+            box-shadow: 0 0 5px rgba(220, 53, 69, 0.5);
+        }
+
+        .accordion-header {
+            background: #f8f9fa;
+            padding: 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+            user-select: none;
+        }
+
+        .accordion-header:hover {
+            background: #e9ecef;
+        }
+
+        .accordion-header.active {
+            background: #3498db;
+            color: white;
+        }
+
+        .accordion-title {
+            font-size: 1.1em;
+            font-weight: 600;
+            flex: 1;
+            margin-right: 20px;
+            line-height: 1.4;
+        }
+
+        .accordion-icon {
+            font-size: 1.5em;
+            transition: transform 0.3s ease;
+            font-weight: bold;
+        }
+
+        .accordion-header.active .accordion-icon {
+            transform: rotate(180deg);
+        }
+
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            background: white;
+        }
+
+        .accordion-content.active {
+            max-height: 400px;
+        }
+
+        .accordion-body {
+            padding: 25px;
+        }
+		
+		fieldset {
+		border: none;
+		padding: 0;
+		margin: 0;
+}
+		
+		.visually-hidden {
+		position: absolute;
+		width: 1px;
+		height: 1px;
+		margin: -1px;
+		padding: 0;
+		overflow: hidden;
+		clip: rect(0 0 0 0);
+		border: 0;
+}
+
+        .radio-group {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .radio-option {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            padding: 10px 15px;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .radio-option:hover {
+            border-color: #3498db;
+            background: #f8f9fa;
+        }
+
+        .radio-option input[type="radio"] {
+            margin: 0;
+            width: 16px;
+            height: 16px;
+            accent-color: #3498db;
+        }
+
+        .radio-option input[type="radio"]:checked + span {
+            color: #3498db;
+            font-weight: 600;
+        }
+
+        .radio-option:has(input[type="radio"]:checked) {
+            border-color: #3498db;
+            background: #e3f2fd;
+        }
+
+        .why-section {
+            margin-top: 15px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid #3498db;
+        }
+
+        .why-title {
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 8px;
+            font-size: 0.95em;
+        }
+
+        .why-content {
+            color: #5a6c7d;
+            line-height: 1.5;
+            font-size: 0.9em;
+        }
+
+        .button-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 30px;
+            background: #f8f9fa;
+            border-top: 1px solid #e9ecef;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 25px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .nextBtn {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            color: white;
+        }
+
+        .nextBtn:hover {
+            background: linear-gradient(135deg, #2980b9, #21618c);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.4);
+        }
+
+        .backBtn {
+            background: #6c757d;
+            color: white;
+        }
+
+        .backBtn:hover {
+            background: #5a6268;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(108, 117, 125, 0.4);
+        }
+
+        .result {
+            display: none;
+            margin: 30px;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            border: 3px solid;
+        }
+
+        .result.low {
+            background-color: #d4edda;
+            border-color: #c3e6cb;
+            color: #155724;
+        }
+
+        .result.low-medium {
+            background-color: #fff3cd;
+            border-color: #ffeeba;
+            color: #856404;
+        }
+
+        .result.medium {
+            background-color: #ffeeba;
+            border-color: #f5c6cb;
+            color: #856404;
+        }
+
+        .result.medium-high {
+            background-color: #f8d7da;
+            border-color: #f5c6cb;
+            color: #721c24;
+        }
+
+        .result.high {
+            background-color: #f5c6cb;
+            border-color: #dc3545;
+            color: #721c24;
+        }
+
+        .result h3 {
+            font-size: 1.8em;
+            margin-bottom: 15px;
+        }
+
+        .result p {
+            font-size: 1.1em;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+		.result ul {
+            text-align: left;
+            max-width: 600px;
+            margin: 20px auto;
+        }
+
+        .result li {
+            margin-bottom: 10px;
+            line-height: 1.4;
+        }
+		
+        .download-link {
+            display: inline-block;
+            margin-top: 1rem;
+            padding: 12px 25px;
+            background: linear-gradient(135deg, #28a745, #20c997);
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .download-link:hover {
+            background: linear-gradient(135deg, #218838, #1e7e34);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(40, 167, 69, 0.4);
+        }
+
+        .privacy-note {
+            font-size: 0.85em;
+            text-align: center;
+            color: #555;
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-bottom-left-radius: 20px;
+            border-bottom-right-radius: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                margin: 10px;
+                border-radius: 15px;
+            }
+            
+            .header {
+                padding: 20px;
+            }
+            
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .page {
+                padding: 20px;
+            }
+            
+            .accordion-header {
+                padding: 15px;
+            }
+            
+            .accordion-title {
+                font-size: 1em;
+            }
+            
+            .radio-group {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Household Cybersecurity Checklist</h1>
+            <p>Evaluate your home digital security</p>
+        </div>
+<main>
+
+
+    <div class="progress-indicator">
+        <div class="progress-text" id="pageIndicator">Page 1 of 4</div>
+        <div class="progress-bar">
+        <div class="progress-fill" id="progressFill"></div>
+        </div>
+     </div>
+
+    <form id="checklist">
+	
+  <!-- Page 1: Smart Home -->
+  
+    <div id="page1" class="page active">
+	<div class="page-header">
+		<h2>🏡 The Smart Home</h2>
+	</div>
+
+	<div class="accordion-item">
+		<div class="accordion-header" tabindex="0" role="button" aria-expanded="false">
+			<div class="accordion-title">Have you changed the default username and password on your smart devices?</div>
+			<div class="accordion-icon">▼</div>
+		</div>
+		<div class="accordion-content" aria-hidden="true">
+			<div class="accordion-body">
+			<fieldset>
+          <legend class="visually-hidden">Have you changed the default username and password on your smart devices?</legend>
+				<div class="radio-group">
+					<label class="radio-option">
+						<input type="radio" name="q1" value="yes">
+						<span>Yes</span>
+					</label>
+					<label class="radio-option">
+						<input type="radio" name="q1" value="no" data-recommendation="<a href='https://www.ncsc.gov.uk/guidance/secure-your-devices' target='_blank'>Change default credentials on your smart devices to prevent unauthorised access.</a>">
+						<span>No</span>
+					</label>
+				</div>
+				<div class="why-section">
+					<div class="why-title">Why this matters</div>
+					<div class="why-content">Default credentials are easy targets for attackers. Changing them reduces the risk of brute-force attacks.</div>
+				</div>
+				</fieldset>
+			</div>
+		</div>
+	</div>
+	
+	<div class="accordion-item">
+		<div class="accordion-header" tabindex="0" role="button" aria-expanded="false">
+			<div class="accordion-title">Can you control your smart devices from outside your home network?</div>
+			<div class="accordion-icon">▼</div>
+		</div>
+		<div class="accordion-content" aria-hidden="true">
+			<div class="accordion-body">
+<fieldset>
+          <legend class="visually-hidden">Can you control your smart devices from outside your home network?</legend>
+				<div class="radio-group">
+					<label class="radio-option">
+						<input type="radio" name="q2" value="yes">
+						<span>Yes</span>
+					</label>
+					<label class="radio-option">
+						<input type="radio" name="q2" value="no" data-recommendation="<a href='https://www.ncsc.gov.uk/guidance/secure-your-devices' target='_blank'>Change default credentials on your smart devices to prevent unauthorised access.</a>">
+						<span>No</span>
+					</label>
+				</div>
+				<div class="why-section">
+					<div class="why-title">Why this matters</div>
+					<div class="why-content">Remote access should be secured with strong authentication and disabled if not needed to avoid exposing control interfaces.</div>
+				</div>
+				</fieldset>
+			</div>
+		</div>
+	</div>
+	
+	<div class="accordion-item">
+		<div class="accordion-header" tabindex="0" role="button" aria-expanded="false">
+			<div class="accordion-title">Do you review the privacy settings of your smart devices?</div>
+			<div class="accordion-icon">▼</div>
+		</div>
+		<div class="accordion-content" aria-hidden="true">
+			<div class="accordion-body">
+			<fieldset>
+          <legend class="visually-hidden">Do you review the privacy settings of your smart devices?</legend>
+				<div class="radio-group">
+					<label class="radio-option">
+						<input type="radio" name="q3" value="yes">
+						<span>Yes</span>
+					</label>
+					<label class="radio-option">
+						<input type="radio" name="q3" value="no" data-recommendation="<a href='https://www.ncsc.gov.uk/guidance/secure-your-devices' target='_blank'>Change default credentials on your smart devices to prevent unauthorised access.</a>">
+						<span>No</span>
+					</label>
+				</div>
+				<div class="why-section">
+					<div class="why-title">Why this matters</div>
+					<div class="why-content">Smart devices often collect data. Reviewing settings helps you protect your privacy.</div>
+				</div>
+				</fieldset>
+			</div>
+		</div>
+	</div>
+	
+<div class="accordion-item">
+		<div class="accordion-header" tabindex="0" role="button" aria-expanded="false">
+			<div class="accordion-title">Do you know how many smart devices are connected to your home network?</div>
+			<div class="accordion-icon">▼</div>
+		</div>
+		<div class="accordion-content" aria-hidden="true">
+			<div class="accordion-body">
+			<fieldset>
+          <legend class="visually-hidden">Do you know how many smart devices are connected to your home network?</legend>
+				<div class="radio-group">
+					<label class="radio-option">
+						<input type="radio" name="q4" value="yes">
+						<span>Yes</span>
+					</label>
+					<label class="radio-option">
+						<input type="radio" name="q4" value="no" data-recommendation="<a href='https://www.ncsc.gov.uk/guidance/secure-your-devices' target='_blank'>Change default credentials on your smart devices to prevent unauthorised access.</a>">
+						<span>No</span>
+					</label>
+				</div>
+				<div class="why-section">
+					<div class="why-title">Why this matters</div>
+					<div class="why-content">Regularly auditing connected devices helps detect unauthorized access or shadow IoT devices.</div>
+				</div>
+				</fieldset>
+			</div>
+		</div>
+	</div>	
+	
+	<div class="button-row">
+		
+		<button type="button" class="btn nextBtn" onclick="CyberChecklist.nextPage()">Next</button>
+	</div>
+</div>
+
+<!-- Page 2: Password Hygiene -->
+	
+<div id="page2" class="page">
+	<div class="page-header">
+		<h2>🔑 Password Hygiene</h2>
+	</div>
+
+	<div class="accordion-item">
+		<div class="accordion-header" tabindex="0" role="button" aria-expanded="false">
+			<div class="accordion-title">Do you use the same password for all personal accounts?</div>
+			<div class="accordion-icon">▼</div>
+		</div>
+		<div class="accordion-content" aria-hidden="true">
+			<div class="accordion-body">
+			<fieldset>
+          <legend class="visually-hidden">Do you use the same password for all personal accounts?</legend>
+				<div class="radio-group">
+					<label class="radio-option">
+						<input type="radio" name="q5" value="yes">
+						<span>Yes</span>
+					</label>
+					<label class="radio-option">
+						<input type="radio" name="q5" value="no" data-recommendation="<a href='https://www.ncsc.gov.uk/guidance/secure-your-devices' target='_blank'>Change default credentials on your smart devices to prevent unauthorised access.</a>">
+						<span>No</span>
+					</label>
+				</div>
+				<div class="why-section">
+					<div class="why-title">Why this matters</div>
+					<div class="why-content">Using the same password across accounts means one breach can compromise everything. Unique passwords reduce this risk.</div>
+				</div>
+				</fieldset>
+			</div>
+		</div>
+	</div>
+
+	<div class="accordion-item">
+		<div class="accordion-header" tabindex="0" role="button" aria-expanded="false">
+			<div class="accordion-title">Do you use a password manager to store your passwords?</div>
+			<div class="accordion-icon">▼</div>
+		</div>
+		<div class="accordion-content" aria-hidden="true">
+			<div class="accordion-body">
+			<fieldset>
+          <legend class="visually-hidden">Do you use a password manager to store your passwords?</legend>
+				<div class="radio-group">
+					<label class="radio-option">
+						<input type="radio" name="q6" value="yes">
+						<span>Yes</span>
+					</label>
+					<label class="radio-option">
+						<input type="radio" name="q6" value="no" data-recommendation="<a href='https://www.ncsc.gov.uk/guidance/secure-your-devices' target='_blank'>Change default credentials on your smart devices to prevent unauthorised access.</a>">
+						<span>No</span>
+					</label>
+				</div>
+				<div class="why-section">
+					<div class="why-title">Why this matters</div>
+					<div class="why-content">Password managers make it easier to use strong, unique passwords without needing to remember them all.</div>
+				</div>
+				</fieldset>
+			</div>
+		</div>
+	</div>
+	
+	<div class="accordion-item">
+		<div class="accordion-header" tabindex="0" role="button" aria-expanded="false">
+			<div class="accordion-title">Do you use two-factor authentication (2FA) on your important accounts?</div>
+			<div class="accordion-icon">▼</div>
+		</div>
+		<div class="accordion-content" aria-hidden="true">
+			<div class="accordion-body">
+			<fieldset>
+          <legend class="visually-hidden">Do you use two-factor authentication (2FA) on your important accounts?</legend>
+				<div class="radio-group">
+					<label class="radio-option">
+						<input type="radio" name="q7" value="yes">
+						<span>Yes</span>
+					</label>
+					<label class="radio-option">
+						<input type="radio" name="q7" value="no" data-recommendation="<a href='https://www.ncsc.gov.uk/guidance/secure-your-devices' target='_blank'>Change default credentials on your smart devices to prevent unauthorised access.</a>">
+						<span>No</span>
+					</label>
+				</div>
+				<div class="why-section">
+					<div class="why-title">Why this matters</div>
+					<div class="why-content">2FA adds an extra layer of security, making it harder for attackers to access your accounts even if they get your password.</div>
+				</div>
+				</fieldset>
+			</div>
+		</div>
+	</div>
+
+	<div class="accordion-item">
+		<div class="accordion-header" tabindex="0" role="button" aria-expanded="false">
+			<div class="accordion-title">Do you regularly update or change your passwords?</div>
+			<div class="accordion-icon">▼</div>
+		</div>
+		<div class="accordion-content" aria-hidden="true">
+			<div class="accordion-body">
+			<fieldset>
+          <legend class="visually-hidden">Do you regularly update or change your passwords?</legend>
+				<div class="radio-group">
+					<label class="radio-option">
+						<input type="radio" name="q8" value="yes">
+						<span>Yes</span>
+					</label>
+					<label class="radio-option">
+						<input type="radio" name="q8" value="no" data-recommendation="<a href='https://www.ncsc.gov.uk/guidance/secure-your-devices' target='_blank'>Change default credentials on your smart devices to prevent unauthorised access.</a>">
+						<span>No</span>
+					</label>
+				</div>
+				<div class="why-section">
+					<div class="why-title">Why this matters</div>
+					<div class="why-content">Regularly changing passwords helps protect against long-term compromise if a password was exposed without your knowledge.</div>
+				</div>
+				</fieldset>
+			</div>
+		</div>
+	</div>
+
+	<div class="accordion-item">
+		<div class="accordion-header" tabindex="0" role="button" aria-expanded="false">
+			<div class="accordion-title">Are any of your passwords short, simple, or reused from old accounts?</div>
+			<div class="accordion-icon">▼</div>
+		</div>
+		<div class="accordion-content" aria-hidden="true">
+			<div class="accordion-body">
+			<fieldset>
+          <legend class="visually-hidden">Are any of your passwords short, simple, or reused from old accounts?</legend>
+				<div class="radio-group">
+					<label class="radio-option">
+						<input type="radio" name="q9" value="yes">
+						<span>Yes</span>
+					</label>
+					<label class="radio-option">
+						<input type="radio" name="q9" value="no" data-recommendation="<a href='https://www.ncsc.gov.uk/guidance/secure-your-devices' target='_blank'>Change default credentials on your smart devices to prevent unauthorised access.</a>">
+						<span>No</span>
+					</label>
+				</div>
+				<div class="why-section">
+					<div class="why-title">Why this matters</div>
+					<div class="why-content">Weak or reused passwords are easy to guess or crack. Always use complex, unique passwords for every account.</div>
+				</div>
+				</fieldset>
+			</div>
+		</div>
+	</div>
+
+	<div class="button-row">
+		<button type="button" class="btn backBtn" onclick="CyberChecklist.prevPage()">Back</button>
+		<button type="button" class="btn nextBtn" onclick="CyberChecklist.nextPage()">Next</button>
+	</div>
+</div>
+
+<!-- Page 3: Home Network -->
+	
+<div id="page3" class="page">
+	<div class="page-header">
+		<h2>🌐 Home Network</h2>
+	</div>
+
+	<div class="accordion-item">
+		<div class="accordion-header" tabindex="0" role="button" aria-expanded="false">
+			<div class="accordion-title">Have you changed the default admin password on your Wi-Fi router?</div>
+			<div class="accordion-icon">▼</div>
+		</div>
+		<div class="accordion-content" aria-hidden="true">
+			<div class="accordion-body">
+			<fieldset>
+          <legend class="visually-hidden">Have you changed the default admin password on your Wi-Fi router?</legend>
+				<div class="radio-group">
+					<label class="radio-option">
+						<input type="radio" name="q10" value="yes">
+						<span>Yes</span>
+					</label>
+					<label class="radio-option">
+						<input type="radio" name="q10" value="no" data-recommendation="<a href='https://www.ncsc.gov.uk/guidance/secure-your-devices' target='_blank'>Change default credentials on your smart devices to prevent unauthorised access.</a>">
+						<span>No</span>
+					</label>
+				</div>
+				<div class="why-section">
+					<div class="why-title">Why this matters</div>
+					<div class="why-content">Default router passwords are widely known and often targeted by attackers to take over your network.</div>
+				</div>
+				</fieldset>
+			</div>
+		</div>
+	</div>
+
+<div class="accordion-item">
+		<div class="accordion-header" tabindex="0" role="button" aria-expanded="false">
+			<div class="accordion-title">Do you regularly check which devices are connected to your home network?</div>
+			<div class="accordion-icon">▼</div>
+		</div>
+		<div class="accordion-content" aria-hidden="true">
+			<div class="accordion-body">
+			<fieldset>
+          <legend class="visually-hidden">Do you regularly check which devices are connected to your home network?</legend>
+				<div class="radio-group">
+					<label class="radio-option">
+						<input type="radio" name="q11" value="yes">
+						<span>Yes</span>
+					</label>
+					<label class="radio-option">
+						<input type="radio" name="q11" value="no" data-recommendation="<a href='https://www.ncsc.gov.uk/guidance/secure-your-devices' target='_blank'>Change default credentials on your smart devices to prevent unauthorised access.</a>">
+						<span>No</span>
+					</label>
+				</div>
+				<div class="why-section">
+					<div class="why-title">Why this matters</div>
+					<div class="why-content">Rogue or unknown devices could indicate unauthorized access to your network.</div>
+				</div>
+				</fieldset>
+			</div>
+		</div>
+	</div>
+	
+	<div class="button-row">
+		<button type="button" class="btn backBtn" onclick="CyberChecklist.prevPage()">Back</button>
+		<button type="button" class="btn nextBtn" onclick="CyberChecklist.nextPage()">Next</button>
+	</div>
+</div>
+
+<!-- Page 4: Privacy & Data Awareness -->
+	
+<div id="page4" class="page">
+	<div class="page-header">
+		<h2>🛡️ Privacy & Data Awareness</h2>
+	</div>
+
+	<div class="accordion-item">
+		<div class="accordion-header" tabindex="0" role="button" aria-expanded="false">
+			<div class="accordion-title">Do you regularly check app permissions and privacy settings on your devices?</div>
+			<div class="accordion-icon">▼</div>
+		</div>
+		<div class="accordion-content" aria-hidden="true">
+			<div class="accordion-body">
+			<fieldset>
+          <legend class="visually-hidden">Do you regularly check app permissions and privacy settings on your devices?</legend>
+				<div class="radio-group">
+					<label class="radio-option">
+						<input type="radio" name="q12" value="yes">
+						<span>Yes</span>
+					</label>
+					<label class="radio-option">
+						<input type="radio" name="q12" value="no" data-recommendation="<a href='https://www.ncsc.gov.uk/guidance/secure-your-devices' target='_blank'>Change default credentials on your smart devices to prevent unauthorised access.</a>">
+						<span>No</span>
+					</label>
+				</div>
+				<div class="why-section">
+					<div class="why-title">Why this matters</div>
+					<div class="why-content">Apps may collect data unnecessarily. Reviewing permissions limits exposure.</div>
+				</div>
+				</fieldset>
+			</div>
+		</div>
+	</div>
+	
+	<div class="accordion-item">
+		<div class="accordion-header" tabindex="0" role="button" aria-expanded="false">
+        <div class="accordion-title">Do you understand what personal data your devices and apps collect?</div>
+        <div class="accordion-icon">▼</div>
+    </div>
+    <div class="accordion-content" aria-hidden="true">
+        <div class="accordion-body">
+            <fieldset>
+                <legend class="visually-hidden">Do you understand what personal data your devices and apps collect?</legend>
+                <div class="radio-group">
+                    <label class="radio-option">
+                        <input type="radio" name="q13" value="yes">
+                        <span>Yes</span>
+                    </label>
+                    <label class="radio-option">
+                        <input type="radio" name="q13" value="no" data-recommendation="<a href='https://ico.org.uk/your-data-matters/' target='_blank'>Understand how your apps and devices collect and use personal data, and review their privacy policies.</a>">
+                        <span>No</span>
+                    </label>
+                </div>
+                <div class="why-section">
+                    <div class="why-title">Why this matters</div>
+                    <div class="why-content">Knowing what data is collected allows you to make informed privacy choices.</div>
+                </div>
+            </fieldset>
+        </div>
+    </div>
+</div>
+<div class="button-row">
+		<button type="button" class="btn backBtn" onclick="checklist.prevPage()">Back</button>
+		<button type="button" class="btn nextBtn" onclick="checklist.showResults()">Complete Assessment</button>
+	</div>
+</div>
+
+</form>
+
+<div class="result" id="resultBox" aria-live="polite">
+	<h3>Your Risk Level:</h3>
+	<p id="riskText"></p>
+	<div id="downloadSection"></div>
+</div>
+</main>
+<footer>
+	<div class="privacy-note">
+		This tool does not collect, store, or transmit any personal data. All information is processed locally in your browser in accordance with the GDPR principles of data minimisation and user privacy.
+	</div>
+	</footer>
+	
+<script src="testtest.js"></script>
+</body>
+</html>
