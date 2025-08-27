@@ -204,17 +204,17 @@ const CyberChecklist = {
     calculateScore() {
         const form = document.getElementById('checklist');
         const formData = new FormData(form);
-        let score = 0;
-        let total = 0;
+        let safeCount = 0; // counts "good" answers
+        let total = 0;  // number of scored questions
 
         for (let [name, value] of formData.entries()) {
             if (name.startsWith('q') && (value === 'yes' || value === 'no')) {
                 total++;
-                if (value === 'yes') score++;
+                if (value === 'yes') safeCount++;
             }
         }
 
-        return { score, total };
+        return { safeCount, total };
     },
 
     showResults() {
@@ -222,8 +222,8 @@ const CyberChecklist = {
             return;
         }
 
-        const { score, total } = this.calculateScore();
-        const percentage = total > 0 ? (score / total) * 100 : 0;
+        const { safeCount, total } = this.calculateScore();
+        const safePercentage = total > 0 ? (safeCount / total) * 100 : 0;
 
         // Hide all pages and navigation
         this.pages.forEach(id => document.getElementById(id).style.display = 'none');
@@ -231,19 +231,19 @@ const CyberChecklist = {
 
         let riskClass, riskLevel, riskMessage;
 
-        if (percentage >= 80) {
+        if (safePercentage >= 80) {
             riskClass = 'low';
             riskLevel = 'Low Risk';
             riskMessage = 'Excellent! Your digital security setup appears to be very secure.';
-        } else if (percentage >= 60) {
+        } else if (safePercentage >= 60) {
             riskClass = 'low-medium';
             riskLevel = 'Low-Medium Risk';
             riskMessage = 'Good security practices overall, but there are a few areas for improvement.';
-        } else if (percentage >= 40) {
+        } else if (safePercentage >= 40) {
             riskClass = 'medium';
             riskLevel = 'Medium Risk';
             riskMessage = 'Several security gaps that should be addressed to reduce your risk.';
-        } else if (percentage >= 20) {
+        } else if (safePercentage >= 20) {
             riskClass = 'medium-high';
             riskLevel = 'Medium-High Risk';
             riskMessage = 'Several security vulnerabilities that need attention.';
@@ -271,7 +271,7 @@ const CyberChecklist = {
 
         resultBox.innerHTML = `
             <h3>${riskLevel}</h3>
-            <p>You scored ${score} out of ${total} (${Math.round(percentage)}%)</p>
+            <p>You scored ${safeCount} out of ${total} (${Math.round(safePercentage)}%)</p>
             <p>${riskMessage}</p>
             ${recommendationsHtml}
             <button class="btn nextBtn" onclick="CyberChecklist.restartChecklist()">Start Over</button>
@@ -333,4 +333,5 @@ const CyberChecklist = {
 window.checklist = CyberChecklist;
 
 // Initialize when DOM is loaded
+
 document.addEventListener('DOMContentLoaded', () => CyberChecklist.init());
